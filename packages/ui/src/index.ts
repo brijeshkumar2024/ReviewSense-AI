@@ -7,3 +7,5 @@ export { default as LoadingSkeleton } from './components/LoadingSkeleton';
 export { default as AIStreamingResponse } from './components/AIStreamingResponse';
 export { default as ExportDialog } from './components/ExportDialog';
 export { default as Notification } from './components/Notification';
+export { default as ErrorBoundary } from './components/ErrorBoundary';
+export { default as Modal } from './components/Modal';
