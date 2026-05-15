@@ -22,6 +22,12 @@ const features = [
   }
 ];
 
+const liveReviews = [
+  { text: 'Amazing service experience...', sentiment: 'positive', platform: 'Google' },
+  { text: 'Waited 45 mins for food', sentiment: 'negative', platform: 'Yelp' },
+  { text: 'Staff was incredibly helpful!', sentiment: 'positive', platform: 'Facebook' }
+];
+
 const LandingPage = () => {
   return (
     <main className="relative overflow-hidden px-6 pb-20 pt-10 sm:px-10 lg:px-14">
@@ -57,24 +63,22 @@ const LandingPage = () => {
                   <p className="text-sm uppercase tracking-[0.3em] text-slate-400">AI workflow</p>
                   <p className="mt-2 text-2xl font-semibold text-white">Sentiment command center</p>
                 </div>
-                <div className="rounded-full bg-slate-900/80 px-4 py-2 text-xs uppercase tracking-[0.32em] text-teal-300">Live</div>
+                <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity }} className="rounded-full bg-teal-500/20 px-4 py-2 text-xs uppercase tracking-[0.32em] text-teal-300 ring-1 ring-teal-500/30">● Live</motion.div>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-5 shadow-slate-950/40">
-                  <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Sentiment pulse</p>
-                  <div className="mt-6 flex items-end gap-4">
-                    <div className="flex-1 text-3xl font-semibold text-white">72%</div>
-                    <div className="text-sm text-slate-400">positive</div>
-                  </div>
-                  <div className="mt-4 h-2 rounded-full bg-slate-900">
-                    <div className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400" style={{ width: '72%' }} />
-                  </div>
-                </div>
-                <div className="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-5 shadow-slate-950/40">
-                  <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Top theme</p>
-                  <p className="mt-5 text-3xl font-semibold text-white">Service</p>
-                  <p className="mt-3 text-sm leading-6 text-slate-400">High praise from 4.8-star reviews.</p>
-                </div>
+              <div className="max-h-64 overflow-hidden rounded-[1.5rem]">
+                <motion.div animate={{ y: [-10, 0] }} transition={{ duration: 8, repeat: Infinity }} className="space-y-3">
+                  {liveReviews.map((review, idx) => (
+                    <motion.div key={idx} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.2 }} className="rounded-3xl border border-white/10 bg-slate-900/60 p-4 backdrop-blur">
+                      <p className="text-sm text-slate-300">{review.text}</p>
+                      <div className="mt-3 flex items-center justify-between">
+                        <div className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${review.sentiment === 'positive' ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}`}>
+                          {review.sentiment === 'positive' ? '😊 Positive' : '😞 Negative'}
+                        </div>
+                        <span className="text-xs text-slate-500">{review.platform}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
               </div>
             </GlassPanel>
           </motion.div>
