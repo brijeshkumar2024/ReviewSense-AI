@@ -4,3 +4,4 @@ export { default as Input } from './components/Input';
 export { default as GlassPanel } from './components/GlassPanel';
 export { default as AnimatedCounter } from './components/AnimatedCounter';
 export { default as LoadingSkeleton } from './components/LoadingSkeleton';
+export { default as AIStreamingResponse } from './components/AIStreamingResponse';
