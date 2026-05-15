@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.DS_Store
+.env
+.env.local
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+coverage/
+logs/
+.vscode/
+**/.turbo/
+**/build/
+**/coverage/
+**/.cache/
