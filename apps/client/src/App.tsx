@@ -21,7 +21,7 @@ const App = () => {
       <main className="relative overflow-hidden">
         <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
           <motion.div key={location.pathname} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.35 }}>
-            <Suspense fallback={<div className="flex min-h-[calc(100vh-96px)] items-center justify-center text-slate-400">Loading experience…</div>}>
+            <Suspense fallback={<div className="flex min-h-[calc(100vh-96px)] items-center justify-center text-slate-400">Loading Revora workspace...</div>}>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/auth" element={<AuthPage />} />

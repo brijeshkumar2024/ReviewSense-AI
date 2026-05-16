@@ -1,11 +1,50 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import type { FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Button from '@reviewsense/ui/src/components/Button';
 import Input from '@reviewsense/ui/src/components/Input';
+import api from '../lib/api';
+import useAuthStore from '../hooks/useAuthStore';
 
 const AuthPage = () => {
   const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const setSession = useAuthStore((state) => state.setSession);
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError('');
+    setIsLoading(true);
+
+    const formData = new FormData(event.currentTarget);
+    const name = String(formData.get('name') ?? '');
+    const email = String(formData.get('email') ?? '');
+    const password = String(formData.get('password') ?? '');
+
+    try {
+      const endpoint = mode === 'login' ? '/auth/login' : '/auth/register';
+      const payload = mode === 'login' ? { email, password } : { name, email, password };
+      const response = await api.post(endpoint, payload);
+      const data = response.data?.data;
+
+      if (!data?.token || !data?.user?.name || !data?.user?.plan) {
+        throw new Error('Invalid auth response');
+      }
+
+      setSession(data.token, data.user.name, data.user.plan);
+      navigate('/dashboard', { replace: true });
+    } catch (submitError: unknown) {
+      const message =
+        (submitError as { response?: { data?: { message?: string } } })?.response?.data?.message ??
+        (submitError instanceof Error ? submitError.message : 'Authentication failed');
+      setError(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="mx-auto flex min-h-screen max-w-4xl items-center px-6 py-14 sm:px-10">
@@ -13,22 +52,25 @@ const AuthPage = () => {
         <div className="mb-10 grid gap-6 sm:grid-cols-[1fr_0.8fr] sm:items-end">
           <div>
             <p className="text-sm uppercase tracking-[0.35em] text-slate-400">Account access</p>
-            <h1 className="mt-4 text-4xl font-semibold text-white">{mode === 'login' ? 'Secure sign in' : 'Create your ReviewSense workspace'}</h1>
+            <h1 className="mt-4 text-4xl font-semibold text-white">{mode === 'login' ? 'Secure sign in' : 'Create your Revora AI workspace'}</h1>
           </div>
           <button className="self-end text-sm font-semibold text-slate-300 transition hover:text-white" onClick={() => setMode(mode === 'login' ? 'register' : 'login')}>
             {mode === 'login' ? 'Switch to Register' : 'Switch to Login'}
           </button>
         </div>
 
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={onSubmit}>
           {mode === 'register' && <Input label="Full name" name="name" placeholder="Sofia Alvarez" type="text" />}
-          <Input label="Business email" name="email" placeholder="team@reviewsense.ai" type="email" />
+          <Input label="Business email" name="email" placeholder="team@revora.ai" type="email" />
           <Input label="Password" name="password" placeholder="Enter a secure password" type="password" />
-          <Button type="submit" className="w-full">{mode === 'login' ? 'Continue to dashboard' : 'Create account'}</Button>
+          {error ? <p className="text-sm text-rose-300">{error}</p> : null}
+          <Button type="submit" className="w-full" isLoading={isLoading} disabled={isLoading}>
+            {mode === 'login' ? 'Continue to dashboard' : 'Create account'}
+          </Button>
         </form>
 
         <div className="mt-8 rounded-[2rem] bg-slate-900/80 px-6 py-5 text-sm text-slate-300">
-          <p className="font-semibold text-white">Why ReviewSense?</p>
+          <p className="font-semibold text-white">Why Revora AI?</p>
           <p className="mt-3 leading-7">AI analysis, competitor benchmarking, and reply automation built for local brands that want to turn feedback into faster business decisions.</p>
         </div>
 

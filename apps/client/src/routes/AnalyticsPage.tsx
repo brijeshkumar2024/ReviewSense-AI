@@ -1,6 +1,13 @@
 import { motion } from 'framer-motion';
 import GlassPanel from '@reviewsense/ui/src/components/GlassPanel';
 
+const topicCoverage = [
+  { topic: 'Service', coverage: '84%' },
+  { topic: 'Delivery', coverage: '69%' },
+  { topic: 'Pricing', coverage: '73%' },
+  { topic: 'Ambience', coverage: '78%' }
+];
+
 const AnalyticsPage = () => {
   return (
     <div className="mx-auto max-w-7xl px-6 py-10 sm:px-8">
@@ -20,10 +27,10 @@ const AnalyticsPage = () => {
             <div className="rounded-full bg-slate-900/80 px-4 py-2 text-sm text-slate-300">Updated daily</div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            {['Service', 'Delivery', 'Pricing', 'Ambience'].map((topic) => (
-              <motion.div whileHover={{ scale: 1.02 }} key={topic} className="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-5">
-                <p className="text-sm uppercase tracking-[0.32em] text-slate-500">{topic}</p>
-                <p className="mt-4 text-3xl font-semibold text-white">{Math.floor(Math.random() * 24 + 60)}%</p>
+            {topicCoverage.map((item) => (
+              <motion.div whileHover={{ scale: 1.01 }} key={item.topic} className="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-5">
+                <p className="text-sm uppercase tracking-[0.32em] text-slate-500">{item.topic}</p>
+                <p className="mt-4 text-3xl font-semibold text-white">{item.coverage}</p>
                 <p className="mt-3 text-sm text-slate-400">Share of reviews mentioning this topic.</p>
               </motion.div>
             ))}

@@ -14,8 +14,8 @@ const Navigation = () => {
     <header className="sticky top-0 z-30 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3 text-lg font-semibold text-white">
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-500 text-sm shadow-lg shadow-sky-500/20">RS</span>
-          ReviewSense AI
+          <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-violet-500 text-sm shadow-lg shadow-sky-500/20">RV</span>
+          Revora AI
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {links.map((link) => (

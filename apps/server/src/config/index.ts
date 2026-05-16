@@ -5,7 +5,7 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 export const config = {
   port: Number(process.env.PORT ?? 4000),
-  mongoUri: process.env.MONGO_URI ?? 'mongodb://localhost:27017/reviewsense',
+  mongoUri: process.env.MONGO_URI ?? 'mongodb://localhost:27017/revora',
   redisUrl: process.env.REDIS_URL ?? 'redis://localhost:6379',
   jwtSecret: process.env.JWT_SECRET ?? 'secret',
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET ?? 'refresh-secret',

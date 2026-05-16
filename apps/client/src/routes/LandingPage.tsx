@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Button from '@reviewsense/ui/src/components/Button';
 import GlassPanel from '@reviewsense/ui/src/components/GlassPanel';
-import StatCard from '@reviewsense/ui/src/components/StatCard';
+import StatCard from '../components/StatCard';
 
 const features = [
   {
@@ -42,7 +42,7 @@ const LandingPage = () => {
               Your reviews already contain business intelligence.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-slate-300">
-              ReviewSense AI turns every customer review into a growth signal—sentiment insights, topic trends, smart replies, and competitive benchmarking in a single command center.
+              Revora AI turns every customer review into a growth signal with sentiment insights, complaint trends, smart replies, and competitor benchmarking in one command center.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/auth"><Button>Start your free tier</Button></Link>
@@ -63,10 +63,10 @@ const LandingPage = () => {
                   <p className="text-sm uppercase tracking-[0.3em] text-slate-400">AI workflow</p>
                   <p className="mt-2 text-2xl font-semibold text-white">Sentiment command center</p>
                 </div>
-                <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 2, repeat: Infinity }} className="rounded-full bg-teal-500/20 px-4 py-2 text-xs uppercase tracking-[0.32em] text-teal-300 ring-1 ring-teal-500/30">● Live</motion.div>
+                <div className="rounded-full bg-teal-500/20 px-4 py-2 text-xs uppercase tracking-[0.32em] text-teal-300 ring-1 ring-teal-500/30">● Live</div>
               </div>
               <div className="max-h-64 overflow-hidden rounded-[1.5rem]">
-                <motion.div animate={{ y: [-10, 0] }} transition={{ duration: 8, repeat: Infinity }} className="space-y-3">
+                <div className="space-y-3">
                   {liveReviews.map((review, idx) => (
                     <motion.div key={idx} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: idx * 0.2 }} className="rounded-3xl border border-white/10 bg-slate-900/60 p-4 backdrop-blur">
                       <p className="text-sm text-slate-300">{review.text}</p>
@@ -78,7 +78,7 @@ const LandingPage = () => {
                       </div>
                     </motion.div>
                   ))}
-                </motion.div>
+                </div>
               </div>
             </GlassPanel>
           </motion.div>

@@ -1,143 +1,115 @@
-# ReviewSense AI
+# Revora AI
 
-ReviewSense AI is a modular SaaS platform for local business review intelligence. It transforms customer feedback from multiple sources into actionable insights, AI-generated replies, competitor benchmarking, and polished PDF summaries.
+> **AI-Powered Customer Review Intelligence Platform**
 
-**Status:** Production-grade MVP with elite UI polish, streaming AI responses, and enterprise-ready architecture.
+Revora AI helps local businesses convert scattered customer reviews into sentiment insights, actionable recommendations, and faster owner responses.
+
+![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB?logo=react&logoColor=black)
+![Node](https://img.shields.io/badge/Backend-Node%20%2B%20Express-339933?logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-47A248?logo=mongodb&logoColor=white)
+![Redis](https://img.shields.io/badge/Queue-Redis%20%2B%20BullMQ-DC382D?logo=redis&logoColor=white)
+![Docker](https://img.shields.io/badge/DevOps-Docker-2496ED?logo=docker&logoColor=white)
+
+## Product Problem
+
+Small and mid-sized businesses receive reviews across Google, Yelp, Zomato, and social channels. Most teams struggle with:
+
+- delayed responses to negative reviews
+- no clear trend visibility by topic or sentiment
+- reactive decision-making without reliable analytics
+
+Revora AI solves this by centralizing review ingestion, running AI sentiment/topic analysis, and surfacing practical actions through a business-focused dashboard.
+
+## Core Features
+
+- Review ingestion: CSV upload and structured review capture for multi-source feedback.
+- Sentiment analysis: AI classification for positive, neutral, negative, and urgency trends.
+- AI reply generation: draft contextual responses with business-friendly tone controls.
+- Dashboard analytics: health score, sentiment trend, complaint categories, and response metrics.
+- Competitor benchmarking: compare sentiment and service perception against rivals.
+- SaaS usage controls: JWT auth, subscription tiers, and usage-based access boundaries.
 
 ## Architecture
 
-- `apps/client` — React + TypeScript frontend with Vite, TailwindCSS, Framer Motion, glassmorphism design system, and premium animations.
-- `apps/server` — Express.js backend using TypeScript, Mongoose, JWT authentication, Redis/BullMQ scaffolding, OpenAI integration, Stripe billing, and email notification helpers.
-- `packages/types` — shared TypeScript models and domain contracts.
-- `packages/utils` — reusable validation utilities and schema helpers.
-- `packages/ui` — premium UI component library with AnimatedCounter, AIStreamingResponse, LoadingSkeleton, and motion-enabled interactions.
-
-### Architecture diagram
-
 ```mermaid
 flowchart LR
-  A[User browser] -->|HTTP/SPA| B["React Vite Client<br/>Premium UI Components<br/>Framer Motion"]
-  B -->|REST API| C["Express API Server<br/>Rate Limiting<br/>JWT Auth"]
-  C --> D["MongoDB<br/>Indexed Queries"]
-  C --> E["Redis/BullMQ<br/>Async Processing"]
-  C --> F["OpenAI API<br/>Streaming Responses"]
-  C --> G["Stripe Webhooks<br/>Billing Engine"]
-  C --> H["SMTP<br/>Email Notifications"]
+  A[React + TypeScript Frontend] --> B[Node.js + Express API]
+  B --> C[Redis + BullMQ Queue]
+  C --> D[AI Processing]
+  D --> E[MongoDB]
+  E --> F[Dashboard Analytics]
 ```
 
-## Key Features
+Why this architecture is practical:
 
-**Core Intelligence**
-- Authentication: register, login, JWT with refresh tokens, Google OAuth-ready config.
-- Review ingestion: CSV uploads, raw review ingestion, duplicate-safe data modeling.
-- AI sentiment engine: sentiment analysis, topic extraction, urgency scoring with 91% accuracy.
-- Reply generation: tone-based AI reply drafts with streaming response UX.
+- Redis is used for fast caching and low-latency transient workload handling.
+- BullMQ is used to move heavy AI processing out of request-response cycles.
+- MongoDB stores flexible review documents and analytics-friendly metadata.
 
-**Premium Dashboard**
-- Animated sentiment pulse and trend visualization with live data updates.
-- Business health score with predictive insights.
-- Floating widget architecture with spring physics animations.
-- Staggered entrance animations for visual impact.
+## Screenshots
 
-**Analytics & Insights**
-- Topic heatmaps with interactive hover states.
-- Trend analysis with animated KPI counters.
-- AI-backed recommendations carousel.
-- PDF export with multi-format support (CSV, XLSX ready).
+Add project screenshots in `docs/screenshots/` and reference them here:
 
-**Competitor Analysis**
-- Sentiment benchmarking against rivals.
-- Scoring matrix with visual comparison cards.
-- Competitive intelligence alerts.
+- Landing page: `docs/screenshots/landing.png`
+- Dashboard overview: `docs/screenshots/dashboard.png`
+- Analytics page: `docs/screenshots/analytics.png`
+- AI reply generation: `docs/screenshots/ai-reply.png`
+- Mobile layout: `docs/screenshots/mobile.png`
 
-**SaaS Billing**
-- Plan updates with usage limits and subscription status endpoints.
-- Stripe webhook idempotency keys for reliability.
-- Tiered pricing: Starter (free), Premium ($49/mo), Enterprise (custom).
+## Technical Highlights
 
-**Enterprise DevOps**
-- Docker containerization with multi-stage builds.
-- Docker Compose for local development stack.
-- GitHub Actions CI with Lighthouse performance checks.
-- Kubernetes manifests and deployment guides.
-- Real-time monitoring and structured error logging.
+- TypeScript strict mode across frontend and backend
+- Queue-based AI processing pipeline using Redis + BullMQ
+- JWT authentication with protected application routes
+- Responsive UI for desktop and mobile
+- Dockerized local setup for server, client, MongoDB, and Redis
+- CI-ready build/lint/test scripts
 
-## Getting Started
+## Local Setup
 
-### Prerequisites
-
-- Node.js 20+
-- npm
-- Docker (optional for local containerized stack)
-
-### Local install
+### 1. Install dependencies
 
 ```bash
 npm install
-npm run dev --workspace=apps/server
-npm run dev --workspace=apps/client
 ```
 
-### Environment
+### 2. Configure environment
 
-Copy `.env.example` to `.env` and fill in credentials for OpenAI, Stripe, and MongoDB.
+```bash
+cp .env.example .env
+```
 
-### Build
+Set your keys in `.env` (`OPENAI_API_KEY`, `JWT_SECRET`, `MONGO_URI`, etc.).
+
+### 3. Run development
+
+```bash
+npm run dev
+```
+
+### 4. Build and test
 
 ```bash
 npm run build
+npm run lint
+npm run test
 ```
 
-### Tests
-
-```bash
-npm run test --workspace=apps/server
-npm run test --workspace=apps/client
-```
-
-## Deployment
-
-- Use `apps/server/Dockerfile` for backend production builds.
-- Use `apps/client/Dockerfile` to build and serve the frontend.
-- `docker/docker-compose.yml` can run MongoDB + Redis alongside the app.
-- Kubernetes manifests available for AKS/EKS deployment.
-
-## Premium UI Highlights
-
-✨ **Glassmorphism Design System** — Frosted glass panels with depth-based shadows and glow effects.  
-✨ **Streaming AI Responses** — Typewriter animation with thinking states for active AI display.  
-✨ **Animated Counters** — Spring-physics powered number animations for KPIs.  
-✨ **Loading Skeletons** — Shimmer effects for perceived performance.  
-✨ **Motion Design** — Staggered page entrances, hover lift effects, and magnetic buttons.  
-✨ **Dark Mode Perfection** — Luxurious color layering with cinematic gradients and glow effects.  
-✨ **Mobile-First Responsive** — Touch-friendly interactions and adaptive typography.  
-✨ **Error Boundaries** — Graceful error handling with recovery UI.  
-✨ **Notifications** — Spring-animated toast messages with semantic styling.  
-
-## Performance & Quality
-
-- **Lighthouse Score Target:** 90+
-- **Bundle Optimization:** Code splitting, lazy route loading, dependency tree optimization.
-- **TypeScript:** Strict mode compliance with full type safety.
-- **Accessibility:** ARIA labels, keyboard navigation, screen reader support.
-- **Testing:** E2E (Playwright), unit tests (Jest), integration tests.
-- **Security:** CSRF protection, rate limiting, JWT rotation, Stripe idempotency.
-
-## Folder structure
+## Repository Structure
 
 ```txt
-reviewsense-ai/
-├── apps/
-│   ├── client/
-│   └── server/
-├── packages/
-│   ├── types/
-│   ├── ui/
-│   └── utils/
-├── docker/
-└── .github/
+apps/
+  client/   -> React + TypeScript UI
+  server/   -> Express + TypeScript API
+packages/
+  ui/       -> shared UI components
+  types/    -> shared domain types
+  utils/    -> reusable utility logic
+docker/
+  docker-compose for local stack
 ```
 
-## Notes
+## Interview-Friendly Project Story
 
-This repository is designed as a startup-ready MVP scaffold. The workflow includes modular backend services, shared package contracts, and product-ready UI storyboarding.
+Revora AI was built as a realistic SaaS MVP to solve a practical business problem: turning unstructured customer feedback into weekly operational decisions. The project emphasizes clean architecture, async AI workflows, and a polished product experience without overengineering.
